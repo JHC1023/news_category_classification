@@ -12,8 +12,7 @@ import pandas as pd
 import datetime
 
 category = ['Politics', 'Economic', 'Social', 'Culture', 'World', 'IT']
-df_titles = pd.DataFrame()
-
+div_category = [4, 5, 4, 4, 4, 4]
 options = ChromeOptions()
 options.add_argument('lang=ko_KR')
 
@@ -21,14 +20,16 @@ service = ChromeService(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # change int value by one's part
-my_category = [0, 0]
-button_xpath = '//*[@id="newsct"]/div[4]/div/div[2]'
+my_category = [4, 5]
 
 for num in my_category:
+    df_titles = pd.DataFrame()
+    button_xpath = '//*[@id="newsct"]/div[{}]/div/div[2]'.format(div_category[num])
+
     url = 'https://news.naver.com/section/10{}'.format(num)
     driver.get(url)
-
-    for cnt in range(15):
+    cnt = 0
+    for cnt in range(30):
         time.sleep(1)
         try :
             driver.find_element(By.XPATH, button_xpath).click()
@@ -37,9 +38,9 @@ for num in my_category:
 
     time.sleep(5)
     titles = []
-    for i in range(1, 100):
+    for i in range(1, cnt * 6):
         for j in range(1, 7):
-            title_path = '//*[@id="newsct"]/div[4]/div/div[1]/div[{}]/ul/li[{}]/div/div/div[2]/a/strong'.format(i, j)
+            title_path = '//*[@id="newsct"]/div[{}]/div/div[1]/div[{}]/ul/li[{}]/div/div/div[2]/a/strong'.format(div_category[num], i, j)
             try:
                 title = driver.find_element(By.XPATH, title_path).text
                 # print(title)
