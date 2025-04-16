@@ -29,7 +29,7 @@ for num in my_category:
     url = 'https://news.naver.com/section/10{}'.format(num)
     driver.get(url)
     cnt = 0
-    for cnt in range(30):
+    for cnt in range(50):
         time.sleep(1)
         try :
             driver.find_element(By.XPATH, button_xpath).click()
