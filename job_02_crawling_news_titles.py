@@ -20,7 +20,7 @@ service = ChromeService(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # change int value by one's part
-my_category = [4, 5]
+my_category = [2, 3]
 
 for num in my_category:
     df_titles = pd.DataFrame()
